@@ -5,9 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Article;
 use Exception;
 use Illuminate\Http\Request;
-use Illuminate\Routing\Controller as BaseController;
 
-class ArticlesController extends BaseController
+class ArticlesController extends Controller
 {
 
     public function index(Request $request)
