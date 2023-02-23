@@ -26,6 +26,7 @@ class Article extends Model
         'url',
         'published_at',
         'source',
+        'image',
     ];
 
     public function setCategoryAttribute($value)

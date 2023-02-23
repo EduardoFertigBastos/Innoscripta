@@ -36,7 +36,7 @@ class ArticlesSeeder extends Seeder
     {
         $articles = (new GuardianAPI())->buildUrl([
             'page-size'   => '100',
-            'show-fields' => 'trailText,byline,firstPublicationDate,publication'
+            'show-fields' => 'trailText,byline,firstPublicationDate,publication,thumbnail'
         ])->execute()->getArticles();
 
         foreach ($articles as $article) {

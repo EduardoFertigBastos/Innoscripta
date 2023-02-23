@@ -28,6 +28,7 @@ class NewsAPI extends BaseAPI
             'url'           => AppHelper::getArrayValue($art, 'url'),
             'published_at'  => AppHelper::getArrayValue($art, 'publishedAt'),
             'category'      => 'crypto',
+            'image'         => AppHelper::getArrayValue($art, 'urlToImage'),
             'source'        => AppHelper::getArrayValue($art, 'source.name'),
         ]);
     }

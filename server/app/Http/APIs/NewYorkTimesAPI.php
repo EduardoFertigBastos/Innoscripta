@@ -17,6 +17,11 @@ class NewYorkTimesAPI extends BaseAPI
         return $this->data['response']['docs'];
     }
 
+    public static function correctingImage($image)
+    {
+        return 'https://www.nytimes.com/'.$image;
+    }
+
     public static function createArticle($art)
     {
         $art = Arr::dot($art);
@@ -29,6 +34,11 @@ class NewYorkTimesAPI extends BaseAPI
             'published_at'  => AppHelper::getArrayValue($art, 'pub_date'),
             'category'      => AppHelper::getArrayValue($art, 'section_name'),
             'source'        => AppHelper::getArrayValue($art, 'source'),
+            'image'         => self::correctingImage(
+                AppHelper::getArrayValue($art, 'multimidia.0.type') === 'image'
+                    ? AppHelper::getArrayValue($art, 'multimidia.0.url')
+                    : null
+            ),
         ]);
     }
 }

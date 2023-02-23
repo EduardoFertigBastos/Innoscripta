@@ -36,6 +36,7 @@ class GuardianAPI extends BaseAPI
             'url'           => AppHelper::getArrayValue($art, 'webUrl'),
             'published_at'  => AppHelper::getArrayValue($art, 'fields.firstPublicationDate'),
             'category'      => AppHelper::getArrayValue($art, 'sectionName'),
+            'image'         => AppHelper::getArrayValue($art, 'fields.thumbnail'),
             'source'        => self::correctingSource(
                 AppHelper::getArrayValue($art, 'fields.publication'),
             ),
