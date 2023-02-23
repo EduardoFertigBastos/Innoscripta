@@ -14,12 +14,12 @@ return new class extends Migration
         Schema::create('articles', function (Blueprint $table) {
             $table->id();
             $table->string('title');
-            $table->string('description');
-            $table->string('author');
-            $table->string('category');
+            $table->text('description');
+            $table->string('author')->nullable();
+            $table->string('url')->nullable();
+            $table->string('category')->nullable();
+            $table->string('source')->nullable();
             $table->timestamp('published_at')->nullable();
-
-            $table->foreignId('source_id')->references('id')->on('sources');
 
             $table->timestamps();
         });
