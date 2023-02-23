@@ -4,13 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreUserRequest;
 use App\Models\User;
-use App\Models\UserSettings;
+use App\Models\UserSetting;
 use Illuminate\Http\Request;
-use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
-class UsersController extends BaseController
+class UsersController extends Controller
 {
 
     public function store(StoreUserRequest $request)
@@ -24,9 +23,9 @@ class UsersController extends BaseController
                 'password' => Hash::make($request->password),
             ]);
 
-            UserSettings::create([
+            UserSetting::create([
                 'user_id' => $user->id,
-                'settings' => UserSettings::defaultSettings(),
+                'settings' => UserSetting::defaultSettings(),
             ]);
 
             DB::commit();
