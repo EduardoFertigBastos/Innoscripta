@@ -1,5 +1,9 @@
 <?php
 
+use App\Http\Controllers\ArticlesController;
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\UsersController;
+use App\Http\Controllers\UserSettingsController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -14,6 +18,15 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+Route::post('login',    [AuthController::class, 'login']);
+Route::post('logout',   [AuthController::class, 'logout']);
+Route::post('refresh',  [AuthController::class, 'refresh']);
+Route::post('me',       [AuthController::class, 'me']);
+
+Route::post('users', [UsersController::class, 'store']);
+
+Route::middleware('auth:jwt')->group(function () {
+    Route::get('articles',              [ArticlesController::class, 'index']);
+    Route::get('user-config/{id}/show', [UserSettingsController::class, 'show']);
+    Route::patch('user-config/{id}',    [UserSettingsController::class, 'update']);
 });
