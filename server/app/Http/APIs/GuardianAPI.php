@@ -11,7 +11,6 @@ class GuardianAPI extends BaseAPI
 
     public $key = '6eefa2f4-a575-429e-acbf-a6c905261f71';
     public $paramKey = 'api-key';
-
     public $baseUrl = 'https://content.guardianapis.com/search';
 
     public function getArticles()

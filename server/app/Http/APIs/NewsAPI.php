@@ -10,7 +10,6 @@ class NewsAPI extends BaseAPI
 {
     public $key = '2efdd45513e04ca7bff2d258882a7d02';
     public $paramKey = 'apiKey';
-
     public $baseUrl = 'https://newsapi.org/v2/everything';
 
     public function getArticles()
