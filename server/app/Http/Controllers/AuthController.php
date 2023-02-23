@@ -4,12 +4,11 @@ namespace App\Http\Controllers;
 
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Validation\ValidatesRequests;
-use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Http\Request;
 use Tymon\JWTAuth\Facades\JWTAuth;
 
 
-class AuthController extends BaseController
+class AuthController extends Controller
 {
     /**
      * Create a new AuthController instance.
@@ -30,7 +29,6 @@ class AuthController extends BaseController
     {
         $credentials = $request->only(['email', 'password']);
 
-        dd(auth()->attempt($credentials));
         if (! $token = auth()->attempt($credentials)) {
             return response()->json(['error' => 'Unauthorized'], 401);
         }
@@ -82,7 +80,7 @@ class AuthController extends BaseController
         return response()->json([
             'access_token' => $token,
             'token_type' => 'bearer',
-            'expires_in' => auth()->factory()->getTTL() * 60
+            'expires_in' => auth()->factory()->getTTL() * 60 * 24
         ]);
     }
 }
