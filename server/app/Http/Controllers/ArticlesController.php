@@ -43,22 +43,83 @@ class ArticlesController extends Controller
 
     public function buildQueryConditions($query, Request $request)
     {
-        if ($request->has('fav_categories')) {
-            $query->whereIn('category', $request->fav_categories);
-        }
+        try {
+            if ($request->has('keyword')) {
+                $query->where(function ($query) use ($request) {
+                    $query->orWhere('title', 'like', '%' . $request->keyword . '%');
+                    $query->orWhere('description', 'like', '%' . $request->keyword . '%');
+                });
+            }
 
-        if ($request->has('fav_sources')) {
-            $query->whereIn('source', $request->fav_sources);
-        }
+            if ($request->has('category')) {
+                $query->orWhere('category', 'like', '%' . $request->category . '%');
+            }
 
-        if ($request->has('fav_authors')) {
-            $query->whereIn('author', $request->fav_authors);
-        }
+            if ($request->has('source')) {
+                $query->where('source', 'like', '%' . $request->source . '%');
+            }
 
-        if ($request->has('from')) {
-            $query->where('published_at', '>=', $request->from);
-        }
+            if ($request->has('fav_authors')) {
+                $query->orWhereIn('author', $request->fav_authors);
+            }
 
-        return $query;
+            if ($request->has('fav_categories')) {
+                $query->orWhereIn('category', $request->fav_categories);
+            }
+
+            if ($request->has('fav_sources')) {
+                $query->orWhereIn('source', $request->fav_sources);
+            }
+
+            if ($request->has('from')) {
+                $query->where('published_at', '>=', $request->from);
+            }
+
+            return $query;
+        } catch (Exception $ex) {
+            throw new Exception($ex->getMessage());
+        }
+    }
+
+    public function authors(Request $request)
+    {
+        $authors = Article::groupBy('author')
+            ->orderBy('author')
+            ->whereNotNull('author')
+            ->where('author', '!=', '')
+            ->pluck('author');
+
+        return response()->json([
+            'message' => 'Authors returned successfully',
+            'data' => $authors
+        ], 201);
+    }
+
+    public function categories(Request $request)
+    {
+        $categories = Article::groupBy('category')
+            ->orderBy('category')
+            ->whereNotNull('category')
+            ->where('category', '!=', '')
+            ->pluck('category');
+
+        return response()->json([
+            'message' => 'Categories returned successfully',
+            'data' => $categories
+        ], 201);
+    }
+
+    public function sources(Request $request)
+    {
+        $sources = Article::groupBy('source')
+            ->orderBy('source')
+            ->whereNotNull('source')
+            ->where('source', '!=', '')
+            ->pluck('source');
+
+        return response()->json([
+            'message' => 'Sources returned successfully',
+            'data' => $sources
+        ], 201);
     }
 }
