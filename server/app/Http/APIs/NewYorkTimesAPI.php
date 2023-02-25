@@ -19,6 +19,10 @@ class NewYorkTimesAPI extends BaseAPI
 
     public static function correctingImage($image)
     {
+        if (empty($image)) {
+            return null;
+        }
+        
         return 'https://www.nytimes.com/'.$image;
     }
 
@@ -35,9 +39,7 @@ class NewYorkTimesAPI extends BaseAPI
             'category'      => AppHelper::getArrayValue($art, 'section_name'),
             'source'        => AppHelper::getArrayValue($art, 'source'),
             'image'         => self::correctingImage(
-                AppHelper::getArrayValue($art, 'multimidia.0.type') === 'image'
-                    ? AppHelper::getArrayValue($art, 'multimidia.0.url')
-                    : null
+                AppHelper::getArrayValue($art, 'multimedia.0.url')
             ),
         ]);
     }
