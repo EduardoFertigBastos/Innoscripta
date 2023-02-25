@@ -23,7 +23,6 @@ class UpdateUserSettingsRequest extends FormRequest
     {
         return [
             'fav_categories' => [
-                'required',
                 'array',
                 'max:3'
             ],
@@ -33,7 +32,6 @@ class UpdateUserSettingsRequest extends FormRequest
             ],
 
             'fav_sources' => [
-                'required',
                 'array',
                 'max:3'
             ],
@@ -43,7 +41,6 @@ class UpdateUserSettingsRequest extends FormRequest
             ],
 
             'fav_authors' => [
-                'required',
                 'array',
                 'max:3'
             ],
