@@ -3,13 +3,13 @@ import styled, { css } from 'styled-components';
 
 import Title from "components/Typography/Title";
 
-interface ModalProps {
+interface IModalProps {
   isOpen: boolean;
 }
 
-export const ModalBackground = styled.div<ModalProps>`
-  width: 100vw;
-  height: 100vh;
+export const ModalBackground = styled.div<IModalProps>`
+  width: 100%;
+  height: 100%;
   background: rgba(32, 29, 29, 0.75);
   position: fixed;
   top: 0;

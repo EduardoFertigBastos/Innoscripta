@@ -10,10 +10,12 @@ export const Container = styled.article`
             25px 25px 20px hsla(0, 0%, 0%, 0.03);
             100px 100px 80px hsla(0, 0%, 0%, 0.05);
 
+  border: 1px solid red;
             
   @media screen and (max-width: 1600px) {
     grid-template-columns: 1fr;
     max-width: 294px;
+    padding-right: 10px;
     overflow: hidden;
   }
 
@@ -48,6 +50,7 @@ export const Content = styled.div`
   padding: 32px 40px;
 
   @media screen and (max-width: 1600px) {
+    width: 90%;
     border-radius: 0;
     padding: 30px 28px 20px;
   }
@@ -85,6 +88,7 @@ export const Footer = styled.div`
   align-items: center;
   
   @media screen and (max-width: 1600px) {
+    width: 90%;
     position: relative;
   }
 `;
@@ -97,6 +101,11 @@ export const Author = styled.div`
 export const AuthorInfo = styled.p`
   color: var(--very-dark-grayish-blue);
   font-size: var(--fs-13);
+  
+  @media screen and (max-width: 1600px) {
+    word-wrap:break-word;
+    width: 255px;
+  }
 `;
 
 export const AuthorName = styled.span`
@@ -114,7 +123,11 @@ export const SeeMore = styled.div`
   position: relative;
 
   @media screen and (max-width: 1600px) {
-    position: static;
+    //display this componente in the bottom of the article
+    position: absolute;
+    bottom: -10px;
+    right: -50px;
+
   }
 `;
 

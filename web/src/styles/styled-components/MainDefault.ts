@@ -1,7 +1,6 @@
 import styled from 'styled-components';
 
 export const MainDefault = styled.section`
-  margin: 10px 10px 0px 10px;
   width: 100%;
   min-height: calc(100vh - 120px);
   padding: 20px;
