@@ -21,7 +21,7 @@ import serializeParams from "utils/serializeParams";
 
 import { MainDefault } from "styles/styled-components/MainDefault";
 
-import ModalPersonalize from "./ModalPersonalize";
+import ModalCustomize from "./ModalCustomize";
 import { ArticlesList, Button, Filters, PersonalizeButton } from "./styles";
 
 interface IFilter {
@@ -206,7 +206,7 @@ const Dashboard: React.FC = () => {
 				/>
 			)}
 
-			<ModalPersonalize 
+			<ModalCustomize 
 				isOpen={isModalOpen} 
 				setIsOpen={setIsModalOpen}
 				executeFilter={executeFilter}
