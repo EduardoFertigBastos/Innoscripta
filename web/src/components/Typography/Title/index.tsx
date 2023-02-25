@@ -2,11 +2,11 @@ import React from 'react';
 
 import { Typography, TypographyProps } from '@mui/material';
 
-interface TitleProps extends TypographyProps {
+interface ITitleProps extends TypographyProps {
 
 }
 
-const Title: React.FC<TitleProps> = ({ 
+const Title: React.FC<ITitleProps> = ({ 
   children, 
   variant = 'h1',
   ...rest 

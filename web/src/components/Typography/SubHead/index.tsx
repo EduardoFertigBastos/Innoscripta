@@ -2,11 +2,11 @@ import React from 'react';
 
 import { Typography, TypographyProps } from '@mui/material';
 
-interface SubHeadProps extends TypographyProps {
+interface ISubHeadProps extends TypographyProps {
 
 }
 
-const SubHead: React.FC<SubHeadProps> = ({ 
+const SubHead: React.FC<ISubHeadProps> = ({ 
   children, 
   color="text.secondary",
   variant = 'body2',

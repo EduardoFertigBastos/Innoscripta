@@ -20,7 +20,7 @@ import logo from '../../assets/logo.svg';
 import { AnimationContainer, Background, Container, Content } from './styles';
 import { schema } from './validation/schema';
 
-interface SignInFormData {
+interface ISignInFormData {
   email: string;
   password: string;
 }
@@ -33,7 +33,7 @@ const SignIn: React.FC = () => {
   const form = useForm({ schema });	
 
   const handleSubmit = useCallback(
-    async (data: SignInFormData) => {
+    async (data: ISignInFormData) => {
       
       await form.validation(data);
 

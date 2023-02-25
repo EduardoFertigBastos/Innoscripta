@@ -3,13 +3,13 @@ import { styled } from '@mui/material/styles';
 
 import { drawerWidth } from '../Drawer/MUIstyle';
 
-interface AppBarProps extends MuiAppBarProps {
+interface IAppBarProps extends MuiAppBarProps {
     open?: boolean;
 }
 
 export const AppBar = styled(MuiAppBar, {
   shouldForwardProp: (prop) => prop !== 'open',
-})<AppBarProps>(({ theme, open }) => ({
+})<IAppBarProps>(({ theme, open }) => ({
   transition: theme.transitions.create(['margin', 'width'], {
     easing: theme.transitions.easing.sharp,
     duration: theme.transitions.duration.leavingScreen,

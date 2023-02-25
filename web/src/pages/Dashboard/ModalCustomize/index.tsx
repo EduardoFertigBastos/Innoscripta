@@ -21,18 +21,18 @@ import {
 	TitleCustomize,
 } from "./styles";
 
-interface Props {
+interface IProps {
 	isOpen: boolean;
 	setIsOpen: (isOpen: boolean) => void;
 }
 
-interface ModalFormData {
+interface IModalFormData {
 	fav_authors: string[];
 	fav_categories: string[];
 	fav_sources: string[];
 }
 
-const ModalCustomize: React.FC<Props> = memo(
+const ModalCustomize: React.FC<IProps> = memo(
 	({ isOpen, setIsOpen }) => {
 		const form = useForm();
 		const { settings, saveSettings } = useSettings();
@@ -54,7 +54,7 @@ const ModalCustomize: React.FC<Props> = memo(
 		}
 
 		const handleSubmit = useCallback(
-			async ({ fav_authors, fav_categories, fav_sources }: ModalFormData) => {
+			async ({ fav_authors, fav_categories, fav_sources }: IModalFormData) => {
 				await saveSettings({
 					fav_authors,
 					fav_categories,

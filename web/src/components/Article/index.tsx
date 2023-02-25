@@ -21,12 +21,12 @@ import {
 	Title,
 } from "./styles";
 
-interface Props {
+interface IProps {
 	article: IArticle;
 }
 const LIMIT_CHARACTERS_TO_SHOW_ON_RESUMED_DESCRIPTION = 230;
 
-const Article: React.FC<Props> = ({ article, ...rest }) => {
+const Article: React.FC<IProps> = ({ article, ...rest }) => {
 	const firstLetterUppercase = useCallback((str: string) => {
 		return str.charAt(0).toUpperCase() + str.slice(1);
 	}, []);
@@ -70,7 +70,7 @@ const Article: React.FC<Props> = ({ article, ...rest }) => {
 								<AuthorInfo>
 									{firstLetterUppercase(
 										article.category ?? ""
-									)}{" "}
+									)}
 									- {article.source}
 									<br />
 									<AuthorName>

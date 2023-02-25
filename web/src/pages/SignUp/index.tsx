@@ -22,7 +22,7 @@ import api from '../../services/api';
 import { PageSignUp, Title } from './styles';
 import { schema } from './validation/schema';
 
-interface SignUpData {
+interface ISignUpData {
     name: string;
     email: string;
     password: string;
@@ -37,7 +37,7 @@ const SignUp = () =>
     const navigate = useNavigate();
 
     const handleSubmit = useCallback(
-        async (data: SignUpData) => {
+        async (data: ISignUpData) => {
             await form.validation(data);
             
             const toast = new Toast().loading();

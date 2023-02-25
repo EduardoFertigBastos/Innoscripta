@@ -2,27 +2,27 @@ import React, { PropsWithChildren, createContext, useCallback, useContext, useSt
 
 import api from '../services/api';
 
-interface User {
+interface IUser {
   id: string;
   name: string;
   email: string;
 }
 
-interface AuthState {
+interface IAuthState {
   token: string;
-  user: User;
+  user: IUser;
 }
 
-interface SignInCredentials {
+interface ISignInCredentials {
   email: string;
   password: string;
 }
 
-interface AuthContextData {
-  user: User;
-  signIn(credentials: SignInCredentials): Promise<void>;
+interface IAuthContextData {
+  user: IUser;
+  signIn(credentials: ISignInCredentials): Promise<void>;
   signOut(): void;
-  updateUser(user: User): void;
+  updateUser(user: IUser): void;
 }
 
 interface IRequestSignIn {
@@ -30,10 +30,10 @@ interface IRequestSignIn {
   password: string;
 }
 
-const AuthContext = createContext<AuthContextData>({} as AuthContextData);
+const AuthContext = createContext<IAuthContextData>({} as IAuthContextData);
 
 export const AuthProvider: React.FC<PropsWithChildren<{}>> = ({ children }) => {
-  const [data, setData] = useState<AuthState>(() => {
+  const [data, setData] = useState<IAuthState>(() => {
     const token = localStorage.getItem('@PFCLI:token');
     const user = localStorage.getItem('@PFCLI:user');
 
@@ -42,7 +42,7 @@ export const AuthProvider: React.FC<PropsWithChildren<{}>> = ({ children }) => {
       return { token, user: JSON.parse(user) };
     }
 
-    return {} as AuthState;
+    return {} as IAuthState;
   });
 
   const signIn = useCallback(async ({ email, password }: IRequestSignIn) => {
@@ -62,11 +62,11 @@ export const AuthProvider: React.FC<PropsWithChildren<{}>> = ({ children }) => {
     localStorage.removeItem('@INNOSCRIPTA:user');
     localStorage.removeItem('@INNOSCRIPTA:settings');
 
-    setData({} as AuthState);
+    setData({} as IAuthState);
   }, []);
 
   const updateUser = useCallback(
-    (user: User) => {
+    (user: IUser) => {
       localStorage.setItem('@INNOSCRIPTA:user', JSON.stringify(user));
 
       setData({
@@ -86,7 +86,7 @@ export const AuthProvider: React.FC<PropsWithChildren<{}>> = ({ children }) => {
   );
 };
 
-export function useAuth(): AuthContextData {
+export function useAuth(): IAuthContextData {
   const context = useContext(AuthContext);
 
   if (!context) throw new Error('useAuth must be used within an AuthProvider');
