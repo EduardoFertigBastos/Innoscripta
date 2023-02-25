@@ -41,9 +41,29 @@ class ArticlesController extends Controller
         }
     }
 
+    public function buildQueryCustomizeConditions($query, Request $request)
+    {
+        $query->where(function ($query) use ($request) {
+            if ($request->has('fav_authors')) {
+                $query->orWhereIn('author', $request->fav_authors);
+            }
+
+            if ($request->has('fav_categories')) {
+                $query->orWhereIn('category', $request->fav_categories);
+            }
+
+            if ($request->has('fav_sources')) {
+                $query->orWhereIn('source', $request->fav_sources);
+            }
+        });
+
+        return $query;
+    }
     public function buildQueryConditions($query, Request $request)
     {
         try {
+            $query = $this->buildQueryCustomizeConditions($query, $request);
+            
             if ($request->has('keyword')) {
                 $query->where(function ($query) use ($request) {
                     $query->orWhere('title', 'like', '%' . $request->keyword . '%');
@@ -57,18 +77,6 @@ class ArticlesController extends Controller
 
             if ($request->has('source')) {
                 $query->where('source', 'like', '%' . $request->source . '%');
-            }
-
-            if ($request->has('fav_authors')) {
-                $query->orWhereIn('author', $request->fav_authors);
-            }
-
-            if ($request->has('fav_categories')) {
-                $query->orWhereIn('category', $request->fav_categories);
-            }
-
-            if ($request->has('fav_sources')) {
-                $query->orWhereIn('source', $request->fav_sources);
             }
 
             if ($request->has('from')) {
