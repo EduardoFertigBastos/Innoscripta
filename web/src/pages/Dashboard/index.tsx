@@ -49,8 +49,8 @@ const Dashboard: React.FC = () => {
 	const { settings } = useSettings();
 
 	const [articles, setArticles] = useState<IArticle[]>([]);
-	const [lastPage, setLastPage] = useState<number>(0);
 	const [page, setPage] = useState<number>(1);
+	const [lastPage, setLastPage] = useState<number>(1);
 	const [filter, setFilter] = useState<IFilter>({} as IFilter);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -128,7 +128,7 @@ const Dashboard: React.FC = () => {
 		return params;
 	}, []);
 
-	const buildParams = useCallback(():{} => {
+	const buildParams = useCallback(() => {
 		let params: {} = {
 			per_page: ARTICLES_PER_PAGE,
 			page: page.toString(),
@@ -148,23 +148,22 @@ const Dashboard: React.FC = () => {
 		await api.get(`/articles?${buildParams()}`)
 			.then((response) => {
 				let data = response.data as IResponse;
-				setLastPage(data.data.last_page);
 				setArticles(data.data.articles);
-
+				setLastPage(data.data.last_page);
 				toast.dismiss();
 			})
 			.catch((error) => {
 				toast.error("Error loading articles!");
 			});
-	}, [page, lastPage, filter, settings]);
+	}, [page, filter, settings]);
 
 	const openModal = useCallback(() => {
 		setIsModalOpen(true);
 	}, []);
 
 	useEffect(() => {
-		executeFilter()
-	}, [page, lastPage, filter, settings]);
+		executeFilter();
+	}, [filter, settings]);
 
 	return (
 		<MainDefault>
@@ -209,7 +208,6 @@ const Dashboard: React.FC = () => {
 			<ModalCustomize 
 				isOpen={isModalOpen} 
 				setIsOpen={setIsModalOpen}
-				executeFilter={executeFilter}
 			/>
 		</MainDefault>
 	);
