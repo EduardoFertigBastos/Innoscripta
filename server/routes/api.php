@@ -27,6 +27,10 @@ Route::post('users', [UsersController::class, 'store']);
 
 Route::middleware('auth:jwt')->group(function () {
     Route::get('articles',              [ArticlesController::class, 'index']);
-    Route::get('user-config/{id}/show', [UserSettingsController::class, 'show']);
-    Route::patch('user-config/{id}',    [UserSettingsController::class, 'update']);
+    Route::get('articles/authors',      [ArticlesController::class, 'authors']);
+    Route::get('articles/sources',      [ArticlesController::class, 'sources']);
+    Route::get('articles/categories',   [ArticlesController::class, 'categories']);
+
+    Route::get('user-config',   [UserSettingsController::class, 'show']);
+    Route::patch('user-config', [UserSettingsController::class, 'update']);
 });
