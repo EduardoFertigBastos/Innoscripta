@@ -24,7 +24,6 @@ import {
 interface Props {
 	isOpen: boolean;
 	setIsOpen: (isOpen: boolean) => void;
-	executeFilter(): Promise<void>;
 }
 
 interface ModalFormData {
@@ -34,7 +33,7 @@ interface ModalFormData {
 }
 
 const ModalCustomize: React.FC<Props> = memo(
-	({ isOpen, setIsOpen, executeFilter }) => {
+	({ isOpen, setIsOpen }) => {
 		const form = useForm();
 		const { settings, saveSettings } = useSettings();
 
@@ -62,7 +61,6 @@ const ModalCustomize: React.FC<Props> = memo(
 					fav_sources,
 				});
 
-				executeFilter();
 				setIsOpen(false);
 			},
 			[form]
