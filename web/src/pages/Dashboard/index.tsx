@@ -150,6 +150,9 @@ const Dashboard: React.FC = () => {
 				let data = response.data as IResponse;
 				setArticles(data.data.articles);
 				setLastPage(data.data.last_page);
+				if (page > data.data.last_page) {
+					setPage(1);
+				}
 				toast.dismiss();
 			})
 			.catch((error) => {
@@ -163,7 +166,7 @@ const Dashboard: React.FC = () => {
 
 	useEffect(() => {
 		executeFilter();
-	}, [filter, settings]);
+	}, [filter, settings, page]);
 
 	return (
 		<MainDefault>
