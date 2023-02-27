@@ -1,15 +1,12 @@
 FROM node:alpine AS builder
 
-WORKDIR /user/app
-
-COPY package*.json ./
-RUN npm install
+WORKDIR /app
 
 COPY . .
+RUN npm install
 
 RUN yarn build
-EXPOSE 3000
-
 
 FROM nginx:1.19-alpine AS server
-COPY --from=builder ./app/build /usr/share/nginx/html
+COPY --from=builder /app/build /usr/share/nginx/html
+EXPOSE 80
