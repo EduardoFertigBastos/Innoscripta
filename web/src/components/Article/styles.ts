@@ -10,8 +10,6 @@ export const Container = styled.article`
             25px 25px 20px hsla(0, 0%, 0%, 0.03);
             100px 100px 80px hsla(0, 0%, 0%, 0.05);
 
-  border: 1px solid red;
-            
   @media screen and (max-width: 1600px) {
     grid-template-columns: 1fr;
     max-width: 294px;
