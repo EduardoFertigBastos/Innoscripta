@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('url')->nullable();
             $table->string('category')->nullable();
             $table->string('source')->nullable();
-            $table->string('image')->nullable();
+            $table->string('image', 500)->nullable();
             $table->timestamp('published_at')->nullable();
 
             $table->timestamps();
