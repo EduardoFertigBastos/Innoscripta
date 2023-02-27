@@ -1,66 +1,62 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+## Back-end
+The backend listens on port 8000 and had its articles loaded with the NewsAPI.org, The Guardian and New York Times APIs. The application has 8 routes that are used.
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
 
-## About Laravel
+### Unauthenticated routes
+The first is the login route where the user must authenticate using an email and password. If the login is successful, the user receives a Json Web Token with a duration of 60 minutes.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+        [POST] localhost:8000/api/login
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+The second route is the route for user registration, where the user needs a password, an email (which must be unique), and a password that must have 8 characters, an uppercase letter, a lowercase letter and the password must be confirmed through the 'password_confirmation' field.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+        [POST] localhost:8000/api/users
 
-## Learning Laravel
+### Authenticated routes
+All routes listed below require authentication.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+The article route lists the existing articles in the system with pagination. Can take the following parameters.
+  
+  [Pagination]
+    -page - Current page (default 1).  
+    -per_page - How many records to load per page (default 20).  
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+  [Filter 1]
+    -keyword - Filter keyword by article title or description.  
+    -category - Filter by article category.  
+    -source - Filter by article source.  
+    -from - Filters all articles posted after the mentioned date (format yyyy-mm-dd).  
 
-## Laravel Sponsors
+  [Filter 2] - Customization
+    -fav_authors[] - You can receive up to 3 favorite authors.  
+    -fav_categories[] - Can receive up to 3 favorite categories.  
+    -fav_sources[] - Can receive up to 3 favorite sources.  
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+        [GET] localhost:8000/api/articles
+        
+Lists all existing authors in the database.
+Returns a message (message) and an array (data) containing the names of all authors.
+    
+        [GET] localhost:8000/api/articles/authors
+    
+Lists all existing fonts in the database.
+Returns a message (message) and an array (data) containing the names of all sources.
 
-### Premium Partners
+        [GET] localhost:8000/api/articles/sources
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
+Lists all existing categories in the database.
+Returns a message (message) and an array (data) containing the names of all categories.
 
-## Contributing
+        [GET] localhost:8000/api/articles/categories
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+List user configuration (user identified by token)
+Returns a message (message) and settings (settings), which is an object with the attributes fav_categories (array), fav_sources (array), fav_authors (array)
 
-## Code of Conduct
+        [GET] localhost:8000/api/user-config
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+Update user configuration (user identified by token)
+It can take three parameters. fav_categories (array), fav_sources (array), fav_authors (array)
 
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+        [PATCH] localhost:8000/api/articles/user-config
+        
+        
