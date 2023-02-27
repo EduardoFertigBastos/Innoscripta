@@ -26,9 +26,9 @@ class UserSettingsController extends Controller
         $user_id = $request->user()->id;
 
         $settings = [
-            'fav_categories' => $request->fav_categories,
-            'fav_sources' => $request->fav_sources,
-            'fav_authors' => $request->fav_authors
+            'fav_categories' => $request->fav_categories ?? [],
+            'fav_sources' => $request->fav_sources ?? [],
+            'fav_authors' => $request->fav_authors ?? []
         ];
 
         UserSetting::where('user_id', $user_id)
