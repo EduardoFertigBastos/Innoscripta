@@ -15,6 +15,10 @@ class ArticlesSeeder extends Seeder
      */
     public function run(): void
     {
+        if (Article::get()->count() > 200) {
+            return;
+        }
+
         $this->runNews();
         $this->runTheGuardian();
         $this->runNewYorkTimes();
