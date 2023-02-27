@@ -1,0 +1,61 @@
+version: "3"
+
+networks:
+  innoscripta-network:
+    driver: bridge
+
+services:
+  # Generate the postgres databse
+  database:
+    image: postgres:14.2-alpine
+    container_name: innoscripta-database
+    # command: --init-file ./server/docker/script/sql.sql
+    environment:
+      POSTGRES_DB: innoscripta_challenge
+      POSTGRES_USER: username # The PostgreSQL user (useful to connect to the database)
+      POSTGRES_PASSWORD: password # The PostgreSQL password (useful to connect to the database)
+    ports:
+      - 5433:5432
+    networks:
+      innoscripta-network:
+        aliases:
+          - innoscripta-database
+    healthcheck:
+      test: ["CMD-SHELL", "sh -c 'pg_isready -U username -d innoscripta_challenge'"]
+      interval: 10s
+      timeout: 3s
+      retries: 3
+    volumes:
+      - ./server/docker/db:/var/lib/postgresql/data
+
+  # Generate backend server
+  backend:
+    build: ./server
+    restart: always
+    container_name: innoscripta-backend
+    environment:
+      DB_CONNECTION: pgsql
+      DB_HOST: innoscripta-database
+      DB_PORT: 5432
+      DB_DATABASE: innoscripta_challenge
+      DB_USERNAME: username # The PostgreSQL user (useful to connect to the database)
+      DB_PASSWORD: password # The PostgreSQL password (useful to connect to the database)
+    ports:
+      - 8000:8000
+    depends_on:
+      database:
+        condition: service_healthy
+    networks:
+      - innoscripta-network
+
+  # Generate frontend server
+  frontend:
+    build: ./web
+    restart: always
+    container_name: innoscripta-frontend
+    ports:
+      - 80:80
+    networks:
+      - innoscripta-network
+    depends_on:       
+      - backend
