@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Http\APIs\GuardianAPI;
 use App\Http\APIs\NewsAPI;
 use App\Http\APIs\NewYorkTimesAPI;
+use App\Models\Article;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
