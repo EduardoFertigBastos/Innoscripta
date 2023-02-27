@@ -6,7 +6,7 @@ export const schema = Yup.object().shape({
         .min(8, 'The password must contain at least 8 digits!')
         .matches(/(?=.*[a-z])/, 'The password must contain a lowercase letter')
         .matches(/(?=.*[A-Z])/, 'Password must contain an uppercase'),
-    passwordConfirmation: Yup.string()
+    password_confirmation: Yup.string()
         .oneOf([Yup.ref('password'), null], 'The entered passwords must be the same!'),
     name: Yup.string().required(),
 });
